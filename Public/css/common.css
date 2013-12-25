@@ -1,0 +1,29 @@
+/*reset*/
+*{margin:0;padding:0}
+body{font: 12px/1.5 arial,helvetica,sans-serif;}
+a{text-decoration:none;color:#0063c8;}
+a:hover{text-decoration: underline;}
+ul,ol{list-style:none;}
+i{font-style: normal;}
+img{border:none;vertical-align:top;}
+br{line-height:0}
+.clearfix:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0}
+.clearfix{display:inline-block}
+.hide{display: none;}
+html[xmlns] .clearfix{display:block}
+* html .clearfix{height:1%}
+h1,h2,h3,h4{font-family:"microsoft yahei";}
+.fl{float:left;}
+.fr{float:right;}
+table{border-collapse: collapse;border-spacing: 0;}
+.error{color:#b94a48;font-size:12px;}
+input[type=text],input[type=password]{height:24px;padding:3px;border:1px solid #e4e4e4;outline:none;}
+input[type=submit],button{padding:7px 13px;border:1px solid #e4e4e4;outline:none;background: none;cursor:pointer;color:#333;}
+/*弹出层*/
+.modal{position:absolute;box-shadow:0 0 10px #333;background:#fff;z-index:10000;position:fixed;}
+.modal_title{border-bottom: 1px solid #e5e5e5;padding:15px;position: relative;}
+.modal_title h2{font-size:18px;font-weight: normal;}
+.modal_title i.close{position: absolute;right:15px;top:10px;cursor: pointer;color:#ccc;font-size: 30px;}
+.modal_body{padding:20px;font-size:14px;}
+.modal_footer{padding:15px;border-top: 1px solid #e5e5e5;text-align: right;}
+.modal_bg{position:absolute;background:#000;opacity:0.5;z-index:9999;left:0;top:0;}

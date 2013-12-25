@@ -1,0 +1,68 @@
+/*login登录页面*/
+#login{background: url(../images/login_bg.jpg)  center top no-repeat;}
+#login form{background:rgba(255,255,255,.8);width:640px;margin:0 auto;margin-top:150px;border:1px solid #ccc;padding:40px 20px;box-shadow: 1px 1px 5px #ccc;color:#666;}
+#login h2{color:#333;margin-bottom: 20px;}
+#login input:not([type=submit]):focus{border-color: #488ee7;}
+#login .username,#login .passwd{background: url(../images/input_login_icons.png) no-repeat;padding-left:26px;width:163px;}
+#login .username:focus{background-position: 0 -106px}
+#login .passwd:focus{background-position: 0 -186px}
+#login .username{background-position: 0 -66px;font-size: 16px;}
+#login .passwd{background-position: 0 -146px;margin-right: 5px;font-size: 16px;}
+#login input[name=code]{width:80px;font-size: 16px;font-weight: bold;background: rgba(255,255,255,.6)}
+#login #code{margin-left:5px;opacity: .6;}
+#login input[type=submit]{margin-top:20px;background: #3a84e8;padding:12px 30px;color:#fff;font-weight: bold;letter-spacing: 3px;}
+#login input[type=submit]:hover{background: #81B4F8;}
+#login p{text-align:center;}
+#login small.error{line-height: 24px;float:right;}
+#login small.error label{margin-left:20px;}
+/*公共*/
+button:active{top:1px;left:1px;}
+.top{width:100%;height:45px;background:#438eb9}
+.sidebar{height:1000px;background:#f2f2f2;border-right:1px solid #ccc;width: 189px;position: absolute;}
+.main-content{margin-left: 190px;}
+/*侧边栏*/
+#sidebar-shortcuts{text-align: center;line-height: 37px;padding-bottom: 4px;}
+#sidebar-shortcuts .btn{position: relative;border-radius:0;border-width:4px;padding:0;webkit-transition: all ease .15s;
+	-moz-transition: all ease .15s;
+	-o-transition: all ease .15s;
+	transition: all ease .15s;
+}
+#sidebar-shortcuts .fa{font-size:14px;padding:4px 8px;}
+#sidebar-shortcuts .btn-success{background:#4cae4c;border-color:#4cae4c;}
+#sidebar-shortcuts .btn-info{background:#46b8da;border-color:#46b8da}
+#sidebar-shortcuts .btn-warning{background:#ffb752;border-color:#ffb752}
+#sidebar-shortcuts .btn-danger{background:#d15b47;border-color:#d15b47}
+#sidebar-shortcuts-large .btn-small{font-size:13px}
+#sidebar-shortcuts-mini {display: none;line-height: 18px;font-size:0;padding-top:2px;}
+#sidebar-shortcuts-mini .btn{font-size:0;padding:8px;border:none;margin:0 1px;opacity:.8;}
+.nav li{position:relative;border-top:1px solid #fcfcfc;border-bottom:1px solid #e5e5e5}
+.nav li.active{background:#fff;}
+.nav li.active a{color:#0b6cbc;}
+.nav li>a{color:#585858}
+.nav li>a:hover{color:#1963aa;background:#fff}
+.nav li:not(.active)>a:hover:before{display:block;content:"";position:absolute;top:-1px;bottom:0;left:0;width:3px;max-width:3px;overflow:hidden;background-color:#3382af}
+.nav li.active a:after{display:block;content:"";position:absolute!important;right:0;top:4px;border:8px solid transparent;border-right-color:#0b6cbc;border-width:14px 10px}
+.nav li.active:after{display:inline-block;content:"";position:absolute;right:-2px;top:-1px;bottom:0;border-right:2px solid #0b6cbc}
+#sidebar-collapse{text-align: center;padding:3px 0;position: relative;border-bottom: 1px solid #e0e0e0;}
+#sidebar-collapse:before {
+	content: "";
+	display: inline-block;
+	height: 0;
+	border-top: 1px solid #e0e0e0;
+	position: absolute;
+	left: 15px;
+	right: 15px;
+	top: 13px;
+}
+#sidebar-collapse i{border:1px solid #bbb;border-radius: 16px;padding:0px 5px;color:#aaa;cursor:pointer;position: relative;background: #fff;line-height: 18px;}
+.breadcrumb .fa-home{font-size:20px;color:#555;position:relative;top:2px}
+.page-content{padding:8px 20px 24px;}
+
+/*分类管理*/
+table#category th,table td{text-align: center;}
+table#category th{background: #307ecc;color:#fff;}
+table#category th:first-of-type,table th:nth-of-type(2){width:8%;}
+table#category th:nth-of-type(3),table td:nth-of-type(3){text-align: left;}
+table#category td .fa{font-size: 16px;position: relative;top:2px;cursor:pointer;}
+table#category td .fa-plus-circle{margin-left:5px;}
+
