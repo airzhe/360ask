@@ -17,7 +17,7 @@ h1,h2,h3,h4{font-family:"microsoft yahei";}
 .fr{float:right;}
 table{border-collapse: collapse;border-spacing: 0;}
 .error{color:#b94a48;font-size:12px;}
-input[type=text],input[type=password]{height:24px;padding:3px;border:1px solid #e4e4e4;outline:none;}
+input[type=text],input[type=password]{min-height:24px;padding:3px;border:1px solid #e4e4e4;outline:none;}
 input[type=submit],button{padding:7px 13px;border:1px solid #e4e4e4;outline:none;background: none;cursor:pointer;color:#333;}
 /*弹出层*/
 .modal{position:absolute;box-shadow:0 0 10px #333;background:#fff;z-index:10000;position:fixed;}

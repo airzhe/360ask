@@ -111,6 +111,7 @@ class Model{
 	}
 	//更新save
 	public function save($data=null){
+		if(!$this->opt['where']) return;
 		$data=isset($data)?$data:$_POST;
 		$sql="UPDATE ".$this->table." SET ";
 		foreach ($data as $k => $v) {

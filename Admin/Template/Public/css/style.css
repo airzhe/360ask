@@ -18,7 +18,8 @@
 /*公共*/
 button:active{top:1px;left:1px;}
 .top{width:100%;height:45px;background:#438eb9}
-.sidebar{height:1000px;background:#f2f2f2;border-right:1px solid #ccc;width: 189px;position: absolute;}
+.wrapper{position: relative;}
+.sidebar{min-height:600px;height:100%;background:#f2f2f2;border-right:1px solid #ccc;width: 189px;position: absolute;}
 .main-content{margin-left: 190px;}
 /*侧边栏*/
 #sidebar-shortcuts{text-align: center;line-height: 37px;padding-bottom: 4px;}
@@ -44,25 +45,30 @@ button:active{top:1px;left:1px;}
 .nav li.active a:after{display:block;content:"";position:absolute!important;right:0;top:4px;border:8px solid transparent;border-right-color:#0b6cbc;border-width:14px 10px}
 .nav li.active:after{display:inline-block;content:"";position:absolute;right:-2px;top:-1px;bottom:0;border-right:2px solid #0b6cbc}
 #sidebar-collapse{text-align: center;padding:3px 0;position: relative;border-bottom: 1px solid #e0e0e0;}
-#sidebar-collapse:before {
-	content: "";
-	display: inline-block;
-	height: 0;
-	border-top: 1px solid #e0e0e0;
-	position: absolute;
-	left: 15px;
-	right: 15px;
-	top: 13px;
-}
-#sidebar-collapse i{border:1px solid #bbb;border-radius: 16px;padding:0px 5px;color:#aaa;cursor:pointer;position: relative;background: #fff;line-height: 18px;}
+#sidebar-collapse:before{content:"";display:inline-block;height:0;border-top:1px solid #e0e0e0;position:absolute;left:15px;right:15px;top:13px}
+#sidebar-collapse i{border:1px solid #bbb;border-radius:16px;color:#aaa;cursor:pointer;position:relative;background:#fff;line-height:18px;padding:0 5px}
 .breadcrumb .fa-home{font-size:20px;color:#555;position:relative;top:2px}
-.page-content{padding:8px 20px 24px;}
+.page-content{padding:8px 20px 24px}
+/*分类页面*/
+table#category th,table td{text-align:center}
+table#category th{background:#307ecc;color:#fff}
+table#category td:first-of-type,table td:nth-of-type(2){width:8%}
+table td:nth-of-type(2) input{width:60%}
+table#category th:nth-of-type(3),table td:nth-of-type(3){text-align:left}
+table#category td:last-of-type{width:12%}
+table#category td .fa{font-size:16px;position:relative;top:2px;cursor:pointer}
+table#category td .fa-plus-circle{margin-left:10px;color:#333}
+td{position:relative}
+table#category td:nth-of-type(3) s{position:relative;color:#ccc;margin-right:5px}
+table#category td:nth-of-type(3) s:not(:last-of-type){color:#fff}
+table#category td:nth-of-type(3) s:before{display:block;content:"";position:absolute;top:-4px;bottom:-4px;left:0;width:1px;max-width:1px;overflow:hidden;background-color:#ccc}
+table#category td:nth-of-type(3) input{margin-left:-4px}
+#addCate{border-radius: 0;padding:5px 18px;margin-bottom: 20px;}
 
-/*分类管理*/
-table#category th,table td{text-align: center;}
-table#category th{background: #307ecc;color:#fff;}
-table#category th:first-of-type,table th:nth-of-type(2){width:8%;}
-table#category th:nth-of-type(3),table td:nth-of-type(3){text-align: left;}
-table#category td .fa{font-size: 16px;position: relative;top:2px;cursor:pointer;}
-table#category td .fa-plus-circle{margin-left:5px;}
-
+tr:not(:first-of-type):not(.level_0){display: none;}/*关闭子菜单*/
+.level_1 .switch{display: none;}
+/*添加分类*/
+form.category_edit .form-control[disabled]{background: none;}
+/*footer*/
+.footer{padding:0 20px}
+.copyright{text-align: right;border-top:1px solid #eee;color:#999;padding:23px 0;}
