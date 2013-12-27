@@ -9,7 +9,19 @@
 		}
 		/*隐藏没有子元素的分类前的图标*/
 		$('tr:gt(0)').each(function(){
-
+			var _tr=$(this);
+			var _cid=_tr.data('cid');
+			var _children=0;
+			_tr.nextUntil('.level_0').each(function(){
+				var _pid=$(this).data('pid');
+				if(_pid==_cid){
+					_children++;
+				}
+			})
+			_tr.data('children',_children);
+			if(_children==0){
+				_tr.find('i').first().remove();
+			}
 		})
 		/*点击展开、关闭树状结构*/
 		$('#category').on('click','.switch',function(){
@@ -18,14 +30,16 @@
 			}else{
 				$(this).removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
 			}
+
 			var _tr=$(this).parents('tr')
-			var cls=_tr.attr('class');
-			_tr.nextUntil('.' + cls).toggle();
+			var _cid=_tr.data('cid');
 
-			// var tr=$(this).parents('tr')
-			// var level=parseInt(/\d+/.exec(tr.attr('class')))+1;
-			// tr.nextAll('.level_' + level).toggle();
-
+			_tr.nextUntil('.level_0').each(function(){
+				var _pid=$(this).data('pid');
+				if(_pid==_cid){
+					$(this).toggle();
+				}
+			})
 		})
 		/*异步修改数据*/
 		$('[name=sort],[name=cname]').focus(function(){
@@ -61,8 +75,16 @@
 		/*异步删除数据*/
 		$('.del').on('click',function(e){
 			e.preventDefault();
-			var _tr=$(this).parents('tr')
+			if(!confirm('确定要执行该操作么？'))
+				return;
+			var _tr=$(this).parents('tr');
+			var _children=_tr.data('children');
+			// if(_children!=0){
+			// 	error('请先删除该分类下的子分类！')
+			// 	return;
+			// }
 			var cid=_tr.data('cid');
+			var pid=_tr.data('pid');
 			$.ajax({
 				url:'?c=category&m=del',
 				type:'get',
@@ -71,7 +93,11 @@
 					if(data==1){
 						_tr.fadeOut(function(){
 							$(this).remove();
+							// _par=$('tr').attr('data-pid')=pid
+							// _par.data('children')-1;
 						});
+					}else if(data==2){
+						success('请先删除该分类下的子分类！');
 					}else{
 						error('删除失败');
 					}
@@ -106,11 +132,11 @@
 						<th colspan="2">名称</th>
 					</tr>
 					<?php foreach ($_data['category'] as $v): ?>
-						<tr class="level_<?php echo $v['level']?>" data-cid="<?php echo $v['cid']?>">
+						<tr class="level_<?php echo $v['level']?>" data-cid="<?php echo $v['cid']?>" data-pid="<?php echo $v['pid']?>">
 							<td><i class="fa fa-plus-square-o switch"></i></td>
 							<td><input type="text" value="<?php echo $v['sort']?>" name="sort"></td>
 							<td><?php echo $v['html']?> <input type="text" value="<?php echo $v['cname']?>" name="cname"> <a href="?c=category&amp;m=add&amp;pid=<?php echo $v['cid']?>"><i class="fa fa-plus-circle"></i></a></td>
-							<td><a href="?c=category&amp;m=edit&amp;cid=<?php echo $v['cid']?>">编辑</a> <a href="javascript:void(0)" class="del">删除</a></td>
+							<td><a href="?c=category&amp;m=edit&amp;cid=<?php echo $v['cid'].'&amp;pid='.$v['pid']?>">编辑</a> <a href="javascript:void(0)" class="del">删除</a></td>
 						</tr>
 					<?php endforeach ?>
 				</table>

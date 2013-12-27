@@ -15,6 +15,7 @@ class CategoryController extends CommonController{
 		$this->assign('category',$_category);
 		$this->display('Category/index.php');
 	}
+	//添加分类
 	public function add(){
 		$this->assign('title','添加分类');
 		if(!empty($_POST)){
@@ -31,9 +32,26 @@ class CategoryController extends CommonController{
 			$this->display('Category/add.php');
 		}
 	}
+	//编辑分类
 	public function edit(){
 		$this->assign('title','编辑分类');
-		$this->display('Category/edit.php');
+		if(!empty($_POST)){
+			if($this->db->save()){
+				$this->success('编辑成功','?c=category&amp;');
+			}else{
+				$this->error('编辑失败','?c=category&amp;');
+			}
+		}else{
+			//上级分类
+			$pid=isset($_GET['pid'])?(int)$_GET['pid']:0;
+			$p_cate=$this->db->where("cid=$pid")->find();
+			//本分类
+			$cid=isset($_GET['cid'])?(int)$_GET['cid']:0;
+			$c_cate=$this->db->where("cid=$cid")->find();
+			$cate=array('cid'=>$cid,'cname'=>$c_cate['cname'],'aliases'=>$c_cate['aliases'],'pname'=>$p_cate['cname']);
+			$this->assign('cate',$cate);
+			$this->display('Category/edit.php');
+		}
 	}
 	//异步编辑
 	public function ajax_edit(){
@@ -49,9 +67,12 @@ class CategoryController extends CommonController{
 			die('0');
 		}
 	}
+	//异步删除
 	public function del(){
 		$cid=isset($_GET['cid'])?(int)$_GET['cid']:0;
 		if(!$cid)return;
+		$children=$this->db->where("pid=$cid")->count();
+		if($children) die('2');
 		if($this->db->where("cid=$cid")->del()){
 			die('1');
 		}else{

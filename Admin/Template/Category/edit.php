@@ -30,20 +30,24 @@
 			</div>
 			<form action="?c=category&amp;m=edit" class="category_edit">
 				<div class="form-group">
-					<label >上级分类</label>
-					<input type="text" class="form-control"
-					<?php if (isset($_GET['cid'])): ?>
-						value="<?php echo $_GET['cid'];?>"
-					<?php else: ?>
-						value='无' disabled
-					<?php endif ?>
-					>
-				</div>
+						<label >上级分类</label>
+						<input type="text" class="form-control" disabled="disabled"
+						<?php if (isset($_data['cate']['pname'])): ?>
+							value="<?php echo $_data['cate']['pname'];?>"
+						<?php else: ?>
+							value='无'
+						<?php endif ?>
+						>
+					</div>
 				
 				<div class="form-group">
 					<label>分类名称<span class="check-tips">（名称不能为空）</span></label>
 					<input type="hidden" name="cid">
-					<input type="text" class="form-control">
+					<input type="text" class="form-control" value="<?php echo $_data['cate']['cname'];?>">
+				</div>
+				<div class="form-group">
+					<label>别名<span class="check-tips"></span></label>
+					<input type="text" class="form-control" value="<?php echo $_data['cate']['aliases'];?>">
 				</div>
 				<button  class="btn btn-info">确定</button>&nbsp;<a href="?c=category" class="btn btn-info">返回</a>
 			</form>

@@ -17,7 +17,9 @@
 #login small.error label{margin-left:20px;}
 /*公共*/
 button:active{top:1px;left:1px;}
-.top{width:100%;height:45px;background:#438eb9}
+.top{width:100%;height:45px;line-height:45px;text-align:right;background:#438eb9}
+.top .logout{font-size:22px;color:#fff;margin-right:10px;}
+.top .logout:hover{text-shadow: 2px 2px 3px rgba(0,0,0,.3)}
 .wrapper{position: relative;}
 .sidebar{min-height:600px;height:100%;background:#f2f2f2;border-right:1px solid #ccc;width: 189px;position: absolute;}
 .main-content{margin-left: 190px;}
@@ -66,7 +68,7 @@ table#category td:nth-of-type(3) input{margin-left:-4px}
 #addCate{border-radius: 0;padding:5px 18px;margin-bottom: 20px;}
 
 tr:not(:first-of-type):not(.level_0){display: none;}/*关闭子菜单*/
-.level_1 .switch{display: none;}
+/*.level_1 .switch{display: none;}*/
 /*添加分类*/
 form.category_edit .form-control[disabled]{background: none;}
 /*footer*/
