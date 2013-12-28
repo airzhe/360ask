@@ -16,6 +16,8 @@ final class Run{
 		self::init_config();
 		//运行控制器
 		App::run();
+		//=============!!!设置时间，不合理!!!=============
+		date_default_timezone_set('PRC');
 	}
 	/**
 	 * 定义常量
@@ -23,7 +25,6 @@ final class Run{
 	static function define_const(){
 		//框架目录
 		define('RUN_PATH',dirname(__FILE__).'/');
-
 	}
 	/**
 	 * 引入框架核心文件

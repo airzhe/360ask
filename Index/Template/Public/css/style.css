@@ -144,8 +144,8 @@ body{margin-top:80px;}
 #ask h3 s{width:186px;height: 29px;background: url(../images/h3_ask.png) no-repeat;position: absolute;top:0;left:0;}
 #ask h3 span{position: absolute;right:5px;top:0;font-size: 12px;color:#b1b1b1;font-weight: normal;}
 #ask h3 span i.error{font-weight: 700;color:#f60;}
-#ask s{position: absolute;right:-25px;top:8px;width:17px;height: 15px;background: url(../images/checked.png) no-repeat;}
-#ask s.error{background-position: 0 -15px;}
+#ask #question s{position: absolute;right:-25px;top:8px;width:17px;height: 15px;background: url(../images/checked.png) no-repeat;}
+#ask #question s.error{background-position: 0 -15px;}
 #ask label{line-height: 28px;margin-top:20px;display: block;}
 #ask label span{color:#9f9f9f;}
 #ask input,#ask textarea{width:708px;;}
@@ -316,9 +316,10 @@ body{margin-top:80px;}
 #loginForm i.checked,#registerForm i.checked{background: url(../images/checked.gif) no-repeat;}
 #loginForm i.unchecked,#registerForm i.unchecked{background: url(../images/unchecked.gif) no-repeat;}
 #registerForm label.error{margin-left:80px;width:72%;text-align: left;}
-#registerForm input[name=code],#loginForm input[name=code]{width:100px;margin-right: 20px;}
+#registerForm input[name=code],#loginForm input[name=code]{width:100px;margin-right: 20px;font-weight: 700;}
 #registerForm .form-group:last-of-type,#loginForm .form-group:last-of-type{position: relative;}
 #registerForm  #code,#loginForm #code{position:absolute;right:20px;top:0;}
+#registerForm s.loading{width:16px;height:16px;display:inline-block;background: url(../images/loading.gif) no-repeat;}
 @keyframes loading
 {
 	0%{width:0;}
@@ -338,6 +339,10 @@ form button span
 	-webkit-animation:loading 1.2s infinite ease 0.0s;
 	animation:loading 1.2s infinite ease 0.2s;
 }
+/*验证邮箱对话框*/
+.email_verify_tips{line-height: 26px;color:#333;}
+.email_verify_tips span{color:#fda000;}
+.email_verify_tips p.title{font-weight: 700;margin-top:20px;}
 /*用户中心user*/
 #userCenter{line-height: 24px;border:1px solid #e4e4e4;width:978px;}
 #userCenter .left *{color:#333;}

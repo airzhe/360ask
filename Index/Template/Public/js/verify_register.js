@@ -3,12 +3,55 @@ jQuery.validator.addMethod("userNameFormat", function(value) {
 }, "用户名只能由字母、数字、下划线组成");
 	//注册验证
 	$('#registerForm').validate({
-		onkeyup:false,
-		rules:{
-			email:{
-				required:true,
-				email:true,
-				remote: {
+		submitHandler:function(form){
+			$(form).find('button').html('<s class="loading"></s>');
+			$.ajax({
+				url:'?c=user&m=regist',
+				type:'post',
+				data:'a=login&' + $(form).serialize(),
+				success:function(data){
+					if(data==1){
+						var email=$(form).find('[name=email]').val();
+						var username=$(form).find('[name=username]').val();
+						$.ajax({
+							url:'?c=user&m=email',
+							type:'post',
+							data:{email:email,username:username},
+							success:function(data){
+								if(data==1){
+									var suffix=email.split("@");
+									var url='http://email.' + suffix['1'];
+									var msg='';
+									msg +='<div class="email_verify_tips">'
+									msg +='<p>验证邮件已经发送到 <span class="email" data-user="'+ username +'">' + email + '</span></p>';
+									msg +='<p>您需要点击邮箱中的确认链接来完成</p>';
+									msg +='<p><a href="' + url + '" target="_blank">立即进入邮箱</a></p>';
+									msg +='<p class="title">没有收到确认链接怎么办？</p>';
+									msg +='<p>1 看看是否在邮箱的回收站中，垃圾箱中</p>';
+									msg +='<p>2 确认没有收到，<a href="javascript:void(0);" id="send_again">点此重发一封</a>&nbsp;&nbsp;&nbsp;<span></span></p>';
+									msg +='</div>'
+									$.modal({
+										title:'消息提示',
+										footer:false,
+										body: msg,
+									})
+								}else{
+									alert('出错了，请重试。')
+								}
+							}
+						})
+					}else{
+						alert('注册失败');
+					}
+				}
+			})
+},
+onkeyup:false,
+rules:{
+	email:{
+		required:true,
+		email:true,
+		remote: {
 				    url: "?c=user&m=check_email",	//后台处理程序
 				    type: "post",               	//数据发送方式 
 				    data: {                     	//要传递的数据
@@ -21,7 +64,16 @@ jQuery.validator.addMethod("userNameFormat", function(value) {
 			username:{
 				required:true,
 				rangelength:[6,20],
-				userNameFormat:true
+				userNameFormat:true,
+				remote: {
+				    url: "?c=user&m=check_user",	//后台处理程序
+				    type: "post",               	//数据发送方式 
+				    data: {                     	//要传递的数据
+				    	username: function() {
+				    		return $("[name=username]").val();
+				    	}
+				    }
+				}
 			},
 			password:{
 				required:true,
@@ -52,8 +104,8 @@ jQuery.validator.addMethod("userNameFormat", function(value) {
 				},
 				username:{
 					required:'用户名不能为空',
-					rangelength:'用户名长度为6-20位'
-
+					rangelength:'用户名长度为6-20位',
+					remote:'用户名已经存在，请更换。'
 				},
 				password:{
 					required:'请设置密码',

@@ -9,6 +9,4 @@ return array(
 	'__PUBLIC__'=>'./Public/',
 	//字体目录
 	'FONT'=>RUN_PATH.'Data/Font/font.ttf',
-	//Email配置
-	'EMAIL'=>'air_zhe@163.com'
 	);

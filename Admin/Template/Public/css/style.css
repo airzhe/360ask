@@ -30,11 +30,16 @@ button:active{top:1px;left:1px;}
 	-o-transition: all ease .15s;
 	transition: all ease .15s;
 }
+#sidebar-shortcuts .btn:hover{opa;}
 #sidebar-shortcuts .fa{font-size:14px;padding:4px 8px;}
 #sidebar-shortcuts .btn-success{background:#4cae4c;border-color:#4cae4c;}
 #sidebar-shortcuts .btn-info{background:#46b8da;border-color:#46b8da}
 #sidebar-shortcuts .btn-warning{background:#ffb752;border-color:#ffb752}
 #sidebar-shortcuts .btn-danger{background:#d15b47;border-color:#d15b47}
+#sidebar-shortcuts .btn-success:hover{background: #629b58;}
+#sidebar-shortcuts .btn-info:hover{background: #4f99c6;}
+#sidebar-shortcuts .btn-warning:hover{background: #e59729;}
+#sidebar-shortcuts .btn-danger:hover{background: #b74635;}
 #sidebar-shortcuts-large .btn-small{font-size:13px}
 #sidebar-shortcuts-mini {display: none;line-height: 18px;font-size:0;padding-top:2px;}
 #sidebar-shortcuts-mini .btn{font-size:0;padding:8px;border:none;margin:0 1px;opacity:.8;}

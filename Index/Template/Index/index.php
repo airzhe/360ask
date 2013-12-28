@@ -120,6 +120,7 @@
 		</div>
 		<div class="sidebar">
 			<div class="user">
+			数据加载中...
 			</div>
 			<div>
 				<img class="index_jifen" src="<?php echo C('TPL_PUBLIC').'images/index_jifen.jpg'?>" alt="">

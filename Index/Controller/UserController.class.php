@@ -28,12 +28,12 @@ class UserController extends CommonController{
 			$uid=$_member->add($member);
 			if($uid)
 			{
-				session_id() || session_start();
-				$_SESSION['uid']=$uid;
-				$_SESSION['uname']=$member['username'];
-				$this->success('注册成功');
+				// session_id() || session_start();
+				// $_SESSION['uid']=$uid;
+				// $_SESSION['uname']=$member['username'];
+				die('1');
 			}else{
-				$this->error('注册失败');
+				die('0');
 			}
 		}else{
 			$this->display('User/register.php');
@@ -58,6 +58,18 @@ class UserController extends CommonController{
 			echo 'false';
 		}
 	}
+
+	//异步验证用户名是否存在
+	public function check_user(){
+		$member=new Model('member');
+		$username=isset($_POST['username'])?strtolower(trim($_POST['username'])):'';
+		if(!$username)die;
+		if(!$member->where("username='$username'")->count()){
+			die('true');
+		}else{
+			die('false');
+		}
+	}
 	//异步验证邮箱是否注册
 	public function check_email(){
 		$member=new Model('member');
@@ -67,6 +79,75 @@ class UserController extends CommonController{
 			die('true');
 		}else{
 			die('false');
+		}
+	}
+	//发送邮箱验证链接
+	public function email(){
+		$email=isset($_POST['email'])?trim($_POST['email']):'532499602@qq.com';
+		$username=isset($_POST['username'])?trim($_POST['username']):'purple';
+		if(!$email || !$username) die;
+		import("Org.Mail.Mailer");
+		import("Org.Mail.Smtp");
+		$mail = new PHPMailer;
+		$system_email=C('EMAIL');	//系统邮箱
+		$email_passwd=C('EMAIL_PASSWD');
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'smtp.163.com';  						  // Specify main and backup server
+		$mail->Port = 465;                   				  // SMTP服务器的端口号
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = $system_email;                      // SMTP username
+		$mail->Password = $email_passwd;          			 // SMTP password
+		$mail->SMTPSecure = 'ssl';                            // Enable encryption, 'ssl' also accepted 必须开启openssl模块
+		$mail->From = $system_email;							//必须和用户名一致
+		$mail->FromName = '360问答';								//邮件列表发件人
+		$mail->addAddress($email, $username);  					// Add a recipient
+		$mail->addReplyTo($system_email, '360问答');				//回复邮箱
+
+		$mail->WordWrap = 50;                                 // Set word wrap to 50 characters
+		$mail->isHTML(true);                                  // Set email format to HTML
+		$auth=authcode($email,'ENCODE',C('TOKEN'),C('AUTH_LINK_EXPIRED'));		 //邮箱加密
+		$examurl=urlencode($auth);
+
+		$date=date('Y-m-d H:i:s');
+		$mail->Subject = "360问答邮箱认证-{$username}";
+		$mail->Body    = <<<str
+亲爱的360问答用户 <strong>{$username}</strong>：
+<br />
+<br />
+感谢你对360问答的支持与厚爱，请点击以下链接完成邮箱认证(如无法打开请把链接复制到浏览器打开)。
+<br />
+<a href='{$_SERVER["HTTP_REFERER"]}?c=user&m=verify_email&code={$examurl}'>{$_SERVER["HTTP_REFERER"]}?c=user&m=verify_email&code={$examurl}</a>
+<br />
+<br />
+360问答邮件中心
+<br />
+{$date};
+str;
+		if($mail->send()) {
+			die('1');
+		}else{
+			die('0');
+		}
+	}
+	//邮箱验证
+	public function verify_email(){
+		$code=isset($_GET['code'])?$_GET['code']:'';
+		if(!$code)die;
+		$email=authcode($code,'DECODE',C('TOKEN'));
+		if(!$email)die;
+		if($email==md5('Timeout')){
+			die('链接已超时');
+		}else{
+			$member=new Model('member');
+			$data['verification']=1;
+			if($member->where("email='$email'")->save($data)){
+				$userinfo=$member->where("email='$email'")->find();
+				session_id() || session_start();
+				$_SESSION['uid']=$userinfo['uid'];
+				$_SESSION['uname']=$userinfo['username'];
+				$msg='恭喜你 <b>'.$userinfo['username'].'</b>，您的邮箱已成功激活。';
+				$this->success($msg,'./');
+			}
 		}
 	}
 }

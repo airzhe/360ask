@@ -2,8 +2,10 @@ $(document).ready(function(){
 	// 弹出层
 	
 	// $('body').on('click','.login,.register,.modal-title .close',modal)//
-
-	
+	//验证码
+	$("body").on('click','#code',function(){
+			$('#code').attr('src','?c=user&m=code&'+Math.random());//记住这一行
+		})
 	//登录注册
 	$('body').on('click','.login',function(){
 		$.modal({
@@ -73,6 +75,31 @@ $(document).ready(function(){
 		var index=$(this).index();
 		slide.find('.item').eq(index).show().siblings().hide();
 		$(this).addClass('selected').siblings().removeClass('selected');
+	})
+	//邮件验证,点此重发一封.  =============!!!没有对发送次数做判断!!!=============
+	var send_num=0;
+	$('body').on('click','#send_again',function(){
+		console.log(send_num);
+		if (send_num>=3){alert('每天发送次数为3次，请改天再试');return;}
+		var self=$(this);
+		var email=$('.email_verify_tips').find('.email').text();
+		var username=$('.email_verify_tips').find('.email').data('user');
+		$.ajax({
+			url:'?c=user&m=email',
+			type:'post',
+			data:{email:email,username:username},
+			success:function(data){
+				if(data==1){
+					send_num++;
+					self.next('span').text('发送成功!')
+					setTimeout(function(){
+						self.next('span').text('');
+					},2000)
+				}else{
+					self.next('span').text('发送失败，请重试!')
+				}
+			}
+		})
 	})
 	// user用户中心
 	//百分比插件
