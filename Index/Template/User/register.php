@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>欢迎登录</title>
+	<title>用户注册</title>
 </head>
 <body>
 	<form action="?c=user&amp;m=regist" id="registerForm" method="post">

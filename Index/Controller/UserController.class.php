@@ -1,16 +1,45 @@
 <?php 
 class UserController extends CommonController{
-	private $db;
+	// private $db;
 	public function status(){
 		$this->display('User/status.php');
 	}
+	//登录
 	public function login(){
 		if(!empty($_POST)){
-
+			$username=isset($_POST['username'])?trim($_POST['username']):'';
+			$passwd=isset($_POST['password'])?md5($_POST['password']):'';
+			if(!$username || !$passwd) die;
+			$member=new Model('member');
+			$userinfo=$member->where(array('username'=>$username,'passwd'=>$passwd))->find();
+			//用户名密码错误
+			if(empty($userinfo)) die('{"status":0}');
+			if($userinfo['verification']==1) {
+				//登录成功
+				$uid=$userinfo['uid'];
+				session_id() || session_start();
+				$_SESSION['uid']=$uid;
+				$_SESSION['uname']=$userinfo['username'];
+				if(isset($_POST['iskeepalive'])){
+					setcookie(session_name(),session_id(),time()+3600*24*30);
+				}
+				$member->where("uid='$uid'")->save(array('logintime'=>time()));
+				die('{"status":1}');
+			}else{
+				//未验证
+				echo json_encode(array('status'=>2,'email'=>$userinfo['email'],'username'=>$userinfo['username']));
+				die;
+			}
 		}else{
 			$this->display('User/login.php');
 		}
 	}
+	public function logout(){
+		session_id() || session_start();
+		session_unset();
+		session_destroy();
+	}
+	//注册验证
 	public function regist(){
 		if(!empty($_POST)){
 			if(empty($_POST)) die;
@@ -89,6 +118,7 @@ class UserController extends CommonController{
 		import("Org.Mail.Mailer");
 		import("Org.Mail.Smtp");
 		$mail = new PHPMailer;
+		$mail->CharSet ="UTF-8";
 		$system_email=C('EMAIL');	//系统邮箱
 		$email_passwd=C('EMAIL_PASSWD');
 		$mail->isSMTP();                                      // Set mailer to use SMTP
@@ -116,7 +146,7 @@ class UserController extends CommonController{
 <br />
 感谢你对360问答的支持与厚爱，请点击以下链接完成邮箱认证(如无法打开请把链接复制到浏览器打开)。
 <br />
-<a href='{$_SERVER["HTTP_REFERER"]}?c=user&m=verify_email&code={$examurl}'>{$_SERVER["HTTP_REFERER"]}?c=user&m=verify_email&code={$examurl}</a>
+<a href='{$_SERVER["HTTP_REFERER"]}?c=user&m=activeEmail&code={$examurl}'>{$_SERVER["HTTP_REFERER"]}?c=user&m=active_email&code={$examurl}</a>
 <br />
 <br />
 360问答邮件中心
@@ -129,8 +159,8 @@ str;
 			die('0');
 		}
 	}
-	//邮箱验证
-	public function verify_email(){
+	//邮箱激活
+	public function activeEmail(){
 		$code=isset($_GET['code'])?$_GET['code']:'';
 		if(!$code)die;
 		$email=authcode($code,'DECODE',C('TOKEN'));

@@ -13,4 +13,5 @@
 		var loginVerifyPath="<?php echo C('TPL_PUBLIC').'js/verify_login.js'?>";
 		var registVerifyPath="<?php echo C('TPL_PUBLIC').'js/verify_register.js'?>";
 	</script>
-	<script src="<?php echo C('TPL_PUBLIC').'js/common.js'?>"></script>	
+	<script src="<?php echo C('TPL_PUBLIC').'js/common.js'?>"></script>
+	<script src="<?php echo C('TPL_PUBLIC').'js/index.js'?>"></script>	

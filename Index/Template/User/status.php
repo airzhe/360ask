@@ -12,6 +12,7 @@ else:
 <div class="info">
 	<a href=""><img src="<?php echo C('TPL_PUBLIC')?>images/avatar.jpg" alt="" width='35' height='35'></a>
 	<span class="userName"><?php echo $_SESSION['uname']?></span>
+	<a href="javascript:void(0);" class="logout">退出</a>
 </div>
 <div>
 	<ul class="clearfix">

@@ -199,3 +199,23 @@ function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
 		return $keyc.str_replace('=', '', base64_encode($result));
 	}
 }
+/**
+ * 二维数组排序
+ * @param $multi_array 要排序的数组
+ * @param $sor_key     按哪个建排序
+ * @param $sort  	   升序还是降序排列
+ */
+function multi_array_sort($multi_array, $sort_key, $sort = SORT_ASC)
+{ 
+	if(!is_array($multi_array)) return;
+	foreach ($multi_array as $row_array) {
+		if (is_array($row_array)) {
+			$key_array[] = $row_array[$sort_key];
+		}
+	}
+	array_multisort($key_array, $sort, $multi_array);
+	return $multi_array;
+}
+/**
+ * 计算几分钟前
+ */

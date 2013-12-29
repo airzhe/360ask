@@ -15,6 +15,7 @@ html[xmlns] .clearfix{display:block}
 h1,h2,h3,h4{font-family:"microsoft yahei";}
 table{border-collapse: collapse;border-spacing: 0;}
 .error{color:#b94a48;font-size:12px;}
+input[type=checkbox]{position: relative;top:2px;}
 
 /*弹出层*/
 .modal{position:absolute;box-shadow:0 0 10px #333;background:#fff;z-index:10000;position:fixed;}
@@ -41,7 +42,7 @@ body{margin-top:80px;}
 #search .ask s{width:68px;height:38px;position:absolute;left:0;top:0;background-image: url(../images/bg.png);background-position: 0 -167px;}
 #search .ask:hover s{background-position: -68px -167px;}
 #search .ask:active s{background-position: -136px -167px;}
-.header .user{height:38px;line-height: 38px;}
+.header .user{height:38px;line-height: 38px;float:left;margin-left:10px;}
 .header .user *{color:#999;}
 .header .user a{margin:0 5px;}
 .userAvatar{display: inline-block;float:left;margin:3px 0 0 20px;
@@ -126,7 +127,10 @@ body{margin-top:80px;}
 .sidebar .user .login s{background-position: 0 -10px;}
 .sidebar .user .register s{background-position:0 -46px}
 
-.sidebar .user .info{padding-bottom:15px;height:32px;line-height:32px;}
+.sidebar .user .info{position:relative;padding-bottom:15px;height:32px;line-height:32px;}
+.sidebar .user .info:hover .logout{display: block;}
+.sidebar .user .info .userName{color:#999;margin-left:5px;}
+.sidebar .user .logout{position:absolute;right:5px;top:20px;display: none;color:#fda000;text-shadow:1px 1px 3px rgba(0,0,0.3);}
 .sidebar .user img{border-radius: 120px;border:2px solid #dce3ed;box-shadow: 0 0 5px rgba(0,0,0,.2);}
 .sidebar .user ul{border-top:1px dotted #e4e4e4;}
 .sidebar .user li{float:left;width:33%;color:#666;margin-top:10px;border-right:1px dotted #ccc;}
@@ -144,14 +148,16 @@ body{margin-top:80px;}
 #ask h3 s{width:186px;height: 29px;background: url(../images/h3_ask.png) no-repeat;position: absolute;top:0;left:0;}
 #ask h3 span{position: absolute;right:5px;top:0;font-size: 12px;color:#b1b1b1;font-weight: normal;}
 #ask h3 span i.error{font-weight: 700;color:#f60;}
-#ask #question s{position: absolute;right:-25px;top:8px;width:17px;height: 15px;background: url(../images/checked.png) no-repeat;}
-#ask #question s.error{background-position: 0 -15px;}
-#ask label{line-height: 28px;margin-top:20px;display: block;}
+#ask .question s{position: absolute;right:-25px;top:8px;width:17px;height: 15px;background: url(../images/checked.png) no-repeat;}
+#ask .question s.error{background-position: 0 -15px;}
+#ask label{line-height: 28px;display: block;}
 #ask label span{color:#9f9f9f;}
-#ask input,#ask textarea{width:708px;;}
-#ask input{outline:none;height:20px;padding:8px;border:1px solid #d5d5d5 ;box-shadow: 0 0 5px rgba(0,0,0,.1);}
+#ask input[type=text],#ask textarea{width:708px;}
+#ask input[type=text]{outline:none;height:20px;padding:8px;border:1px solid #d5d5d5 ;box-shadow: 0 0 5px rgba(0,0,0,.1);}
 #ask input.success{border-color: #00a204;box-shadow: 0 0 5px rgba(0,0,0,.3);}
 #ask input.error{border-color: #fda000;box-shadow: 0 0 5px rgba(0,0,0,.3);}
+#ask .q-box{position: relative;height: 18px;margin-top: 4px;margin-bottom: 5px;}
+.title-tip{color: #f60;}
 #ask .content{width:725px;position: relative;border:1px solid #d5d5d5 ;}
 #ask .content p.upload{height:30px;line-height:30px;background: #f6f6f6;color:#9f9f9f;}
 #ask .content p s{cursor: pointer;width:16px;height: 13px;background: url(../images/image.gif) no-repeat;display: inline-block;margin:0 5px 0 10px;position: relative;top:2px;}
@@ -166,7 +172,7 @@ body{margin-top:80px;}
 	0%{background:  rgb(255, 255, 255)}
 	50%{background: rgb(255, 187, 187)}
 }
-#ask textarea.empty
+#ask #question.empty,.replyForm .empty
 {
 	-webkit-animation:ringing .4s 2 ease 0.0s;
 	animation:ringing .4s 2 ease 0.2s;
@@ -174,8 +180,9 @@ body{margin-top:80px;}
 #ask a{color:#00a204;margin:10px 0;display: inline-block;cursor:pointer;}
 #ask a s{width:13px;height:12px;display: inline-block;background: url(../images/bottom_arrows.png) no-repeat;position: relative;top:2px;left:3px;}
 #ask p.submit{line-height: 28px;text-align: right;}
-#ask button{width:131px;height: 39px;border:none;background: green;color:#fff;cursor: pointer;font-style: 14px;font-weight: bold;position: relative;}
-#ask button s{width:131px;height: 39px;position: absolute;left:0;top:0;background: url(../images/submit.png) 0 -58px no-repeat;}
+#ask button{width:131px;height: 39px;border:none;background: green;color:#fff;cursor: pointer;font-style: 14px;font-weight: bold;position: relative;outline: none;}
+#ask button s{width:131px;height: 39px;position: absolute;left:0;top:0;background: url(../images/submit.png) 0 -58px no-repeat; }
+.modal select.category{margin-right: 15px;}
 
 /*问题页面view*/
 .view_wrapper{border:1px solid #ccc;background:#fbfbfb;}
@@ -187,7 +194,7 @@ body{margin-top:80px;}
 #breadcrumb s{width:0px;height:0px;display:inline-block;border-width:4px;border-style:solid;border-color:#333 transparent transparent;margin-left:3px;position: relative;top:2px;}
 #breadcrumb .crumb>li:hover ul{display: block;}
 .view_content{width:698px;border-right:1px solid #e4e4e4;float:left;background: #fff;}
-.view_content .question {border-bottom: 1px solid #e4e4e4;padding:25px 30px 25px 60px;position: relative;}
+.view_content .question {border-bottom: 1px solid #e4e4e4;padding:25px 30px 25px 30px;position: relative;}
 .view_content .question h1{font-size: 16px;line-height: 26px;font-family: "microsoft yahei";}
 .view_content .question s{width:55px;height: 33px;background: url(../images/wait.png) no-repeat;position: absolute;left:-1px;top:25px;}
 .view_content .question p{line-height: 24px;padding: 10px 0;}
@@ -208,6 +215,7 @@ body{margin-top:80px;}
 .adopt .answer{padding:25px 30px}
 .adopt .author{padding:15px 30px;font-size: 12px;border-bottom: 1px solid #e4e4e4;}
 .adopt .author img{margin-right: 10px;}
+.adopt div{font-size: 14px;color:#333;}
 
 .left{float:left;}
 .right{float:right}
@@ -224,7 +232,7 @@ body{margin-top:80px;}
 .replyForm p{padding:5px 0;}
 .replyForm p.submit span{float:left;color:#666;}
 .replyForm p.submit input{position: relative;top:2px;margin-right: 3px;}
-.replyForm p.submit button{float:right;border:none;background: green;padding:8px 14px;border-radius: 2px;color:#fff;background: linear-gradient(#0EB901,#0AAB00,#0AA600);cursor:pointer;text-shadow:0 0 5px #eee;}
+.replyForm p.submit button{outline:none;float:right;border:none;background: green;padding:8px 14px;border-radius: 2px;color:#fff;background: linear-gradient(#0EB901,#0AAB00,#0AA600);cursor:pointer;text-shadow:0 0 5px #eee;}
 .replyForm p.submit button:hover{background:linear-gradient(#0CAC00,#10A506,#0EB403);}
 
 /*回答列表*/
@@ -233,12 +241,16 @@ body{margin-top:80px;}
 
 .answerList ul li{position: relative;line-height: 24px;padding:15px 0;padding:15px 30px;border-bottom: 1px solid #e4e4e4;}
 .answerList ul li:hover{background: #fbfef0;}
+.answerList ul li:hover p.adoption a{display: block;}
 .answerList li p.meta{position: relative;color:#888;}
+.answerList li p.meta span{color:#0063c8;}
 .answerList li p.meta i{position: absolute;right:0;}
 .answerList li p.content{font-size:14px;margin:10px 0 15px;}
 .answerList li p.praise{text-align: right;color:#666;}
 .answerList li p.praise a{position:relative:top:2px;cursor:pointer;background:url(../images/praise.png) 5px 0 no-repeat;padding-left:20px;color:#666;text-decoration: none;}
 .answerList li p.praise a:hover{color:#df3f0d;}
+.answerList p.adoption{text-align: right;height:24px;margin-top:-15px;}
+.answerList p.adoption a{display: none;}
 
 /*pages分页*/
 .pages {text-align: center;font-size:14px;}
@@ -295,7 +307,7 @@ body{margin-top:80px;}
 
 /*登录框*/
 #loginForm{line-height:24px;padding:0 20px;}
-#loginForm input{height:24px;padding:3px;width:96%;border:1px solid #e4e4e4;box-shadow: 1px 1px 3px #eee inset;outline: none;}
+#loginForm input:not([type=checkbox]){height:24px;padding:3px;width:96%;border:1px solid #e4e4e4;box-shadow: 1px 1px 3px #eee inset;outline: none;}
 #loginForm button{position:relative;margin:15px 0;outline:none;font-size:14px;font-weight:bold;font-family:"microsoft yahei";border:none;background:green;color:#fff;width:100%;padding:8px 14px;cursor:pointer;background: linear-gradient(#5ecc31,#53c226,#46b519);color:#fff;border:1px solid #50ac1d;border-radius: 2px;}
 #loginForm button:hover{background:linear-gradient(#72EE3F,#5CD32C,#4EBB22);}
 #loginForm .form-group{margin-bottom:10px;}

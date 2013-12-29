@@ -16,8 +16,6 @@ final class Run{
 		self::init_config();
 		//运行控制器
 		App::run();
-		//=============!!!设置时间，不合理!!!=============
-		date_default_timezone_set('PRC');
 	}
 	/**
 	 * 定义常量

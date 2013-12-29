@@ -6,16 +6,20 @@ jQuery.validator.addMethod("userNameFormat", function(value) {
 		submitHandler:function(form){
 			$(form).find('button').html('登录中<span>...</span>');
 			$.ajax({
-				url:'verify.php',
+				url:'?c=user&m=login',
 				type:'post',
-				dateType:'json',
-				data:'a=login&' + $(form).serialize(),
+				dataType:'json',
+				data:$(form).serialize(),
 				success:function(data){
-					if(data==1){
+					if(data.status==1){
 						setTimeout(function(){
 							$('.close').click();
 							userStatus();
 						},1000)//测试用
+					}else if(data.status==2){
+						var email=data.email;
+						var username=data.username;
+						activeEmail(email,username);
 					}else{
 						$(form).find('button').html('立即登陆');
 						$('[name=username').removeClass('success').addClass('has-error')//提示用户名错误

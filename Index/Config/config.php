@@ -15,4 +15,6 @@ return array(
 	'AUTH_LINK_EXPIRED'=>20,
 	//加密密钥
 	'TOKEN'=>'houdunwang.com',
+	//SESSION_NAME
+	'SESSION_NAME'=>md5('houdunwang.com')
 	);

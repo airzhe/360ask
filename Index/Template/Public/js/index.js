@@ -1,7 +1,4 @@
 $(document).ready(function(){
-	// 弹出层
-	
-	// $('body').on('click','.login,.register,.modal-title .close',modal)//
 	//验证码
 	$("body").on('click','#code',function(){
 			$('#code').attr('src','?c=user&m=code&'+Math.random());//记住这一行
@@ -10,7 +7,7 @@ $(document).ready(function(){
 	$('body').on('click','.login',function(){
 		$.modal({
 			top:150,
-			title:'登录',
+			title:'欢迎登录360问答',
 			footer:false,
 			callback:function(modal){
 				modal.find('.modal_body').load(loginPath + ' #loginForm',function(){
@@ -22,7 +19,7 @@ $(document).ready(function(){
 	$('body').on('click','.register',function(){
 		$.modal({
 			top:100,
-			title:'用户注册',
+			title:'欢迎注册360问答',
 			footer:false,
 			callback:function(modal){
 				modal.find('.modal_body').load(registPath + ' #registerForm',function(){
@@ -30,6 +27,15 @@ $(document).ready(function(){
 				});		
 			}
 		})		
+	})
+	//logout
+	$('body').on('click','.logout',function(){
+		$.ajax({
+			url:'?c=user&m=logout',
+			success:function(){
+				userStatus();
+			}
+		})
 	})
 	//首页左侧菜单
 	$('#category').find('li').on('mouseenter',function(){
@@ -70,16 +76,31 @@ $(document).ready(function(){
 	})
 	// 轮播图
 	var slide=$('.slide');
+	var i=0;
+	var adTimer;
 	slide.find('.item:gt(0)').hide();
-	$('.slide-nav').find('li').hover(function(){
+	$('.slide-nav').find('li').mouseenter(function(){
 		var index=$(this).index();
+		showImage(index);
+		clearInterval(adTimer);
+	})
+	$('.slide-nav').find('li').mouseleave(function(){
+		adTimer=setInterval(function(){
+			showImage(i);
+			i++;
+			if (i>2)i=0;
+		},1500)
+	})
+	 $('.slide-nav').find('li').first().trigger('mouseleave');
+	function showImage(index){
+		var index=index;
+		$('.slide-nav').find('li').eq(index).addClass('selected').siblings().removeClass();
 		slide.find('.item').eq(index).show().siblings().hide();
 		$(this).addClass('selected').siblings().removeClass('selected');
-	})
+	}
 	//邮件验证,点此重发一封.  =============!!!没有对发送次数做判断!!!=============
 	var send_num=0;
 	$('body').on('click','#send_again',function(){
-		console.log(send_num);
 		if (send_num>=3){alert('每天发送次数为3次，请改天再试');return;}
 		var self=$(this);
 		var email=$('.email_verify_tips').find('.email').text();
@@ -169,7 +190,7 @@ $(document).ready(function(){
 		}; 
 	})(); 
 
-	// $('#ask').on('submit',function(){return false;})
+	$('#ask').on('submit',function(){return false;})
 	//得到失去焦点改变样式
 	$('#question').focus(function(){
 		$(this).addClass('success');
@@ -200,15 +221,147 @@ $(document).ready(function(){
 			$(this).removeClass().addClass('success');
 			obj_count.removeClass('error');
 			ico.removeClass().addClass('success');
+			$("#ask").find('button').find('s').css('background-position','0 0');
 		}
 	})
-	$('button').on('click',function(){
-		var ask_content=$.trim($('textarea').val());
-		$('textarea').attr('class','');
-		$('textarea').addClass('empty');
-		setTimeout(function(){
-			$('textarea').removeClass('empty');
-		},800)
+	//
+	function changeCategory(pid){
+		//如果为不选就返回
+		if(pid=='不选')return;
+		// modal.find('.modal_body').html('');
+		var str='<select class="category" name="category[]" size=12><option selected class="null">不选</option>';
+		$.ajax({
+			url:'?c=ask&m=category',
+			data:'pid=' + pid,
+			type:'get',
+			dataType:'json',
+			success:function(data){
+				if(data==0)return;
+				$.each(data,function(i,n){
+					str+='<option value="' + data[i]['cid'] + '">' + data[i]['cname'] + '</option>';
+				})
+				str+='</select>';
+				$('.modal_body').append(str);
+				if(pid==0){
+					$('.category').val('200').find('.null').remove();
+				}
+			}
+		})
+	}
+	//显示选择分类对话框
+	$('.selectCategory').on('click',function(){
+		$.modal({
+			top:100,
+			title:'请选择问题分类',
+			body:'',
+			// footer:false,
+			callback:changeCategory(0)
+		})
+		if($('#ask_category').find('span').length==0){
+			$('#ask_category').prepend('分类：<span data-cid="200">其他</span> ').find('a').text('[更改]').css('margin-left','5px');
+		}
+		//点击确定按钮获得所选分类ID
+		$('.modal_footer').find('button').first().on('click',function(){
+			var cid=$('#ask_category').find('span').last().data('cid');
+			// console.log(pid);
+			$('#ask').find('[name=cid]').val(cid);
+			$('.modal').find('.close').trigger('click');
+		})
+		$('.modal_footer').find('button').last().on('click',function(){
+			$('.modal').find('.close').trigger('click');
+		})
 	})
-	
+	//分类改变显示下级分类
+	$('body').on('change','.category',function(){
+		var pid=this.value;		
+		var pname=$(this).find("option:selected").text();
+		// console.log([pid,pname]);
+		$(this).next('select').remove();
+		changeCategory(pid);
+
+		var index=$(this).index('.category');
+		var _cate=$('#ask_category');
+		if(index==0){
+			_cate.find('span').eq(0).text(pname).data('cid',pid).nextAll('span').remove();
+		}else{
+			if(pid=='不选'){
+				_cate.find('span').eq(index).remove();
+				return;
+			}
+			pname=' > ' + pname;
+			if(_cate.find('span').eq(index).length==0){
+				_cate.find('a').before('<span data-cid="' + pid +'">' + pname + '</span>');
+			}else{
+				_cate.find('span').eq(index).text(pname);
+			}
+		}
+	})
+	//提问页面提交按钮
+	$('#ask button').on('click',function(){
+		var question=$('#question');
+		var count=$('#ask').find('.count').text();
+		if(count==0){
+			question.addClass('empty');
+			setTimeout(function(){
+				question.removeClass('empty');
+			},800)
+			return;
+		}else if(count<5) {
+			$('.title-tip').show().text('亲，请完善您的问题，问题描述的越清楚，越能收到更好的答案哦!');
+			return;
+		}else if(count>50){
+			$('.title-tip').show().text('亲，您的提问超过了长城的长度，请精简您的提问哦！');
+			return;
+		}
+		var cid=$('#ask').find('[name=cid]').val();
+		if(cid==''){
+			$('.selectCategory').trigger('click');
+			return;
+		}
+		if($('.user').find('.userName').length==0){
+			$('.login').trigger('click');
+			return;
+		}
+		$('#ask').off().submit();
+	})
+	/*问题展示页面ask->show()*/
+	$('.replyForm').on('submit',function(){return false;})
+	$('.replyForm').find('button').on('click',function(){
+		var count=getMessageLength($('.replyForm').find('textarea').val());
+		// console.log(count);
+		if(count==0){
+			$('.replyForm').find('textarea').addClass('empty');
+			setTimeout(function(){
+				$('.replyForm').find('textarea').removeClass('empty');
+			},800)
+			return;
+		}else if(count<5) {
+			$('.title-tip').show().text('亲，回复不要太短哦!');
+			return;
+		}
+		$('.title-tip').hide();
+		if($('.user').find('.userName').length==0){
+			$('.login').trigger('click');
+			return;
+		}
+		$('.replyForm').off().submit();
+	})
+	/*采纳为满意答案*/
+	$('.answerList').find('.adoption').children('a').on('click',function(){
+		var aid=$(this).data('aid');
+		var sid=$(this).data('sid');
+		$.ajax({
+			url:'?c=ask&m=adoption',
+			data:{aid:aid,sid:sid},
+			type:'post',
+			success:function(data){
+				if(data==1){
+					success('操作成功!');
+					window.location.reload();
+				}else{
+					error('出现错误，请重试!');
+				}
+			}
+		})
+	})
 })

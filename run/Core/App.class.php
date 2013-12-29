@@ -4,6 +4,10 @@
  */
 class App{
 	static function run(){
+		//
+		date_default_timezone_set('PRC');
+		header('Content-type:text/html;charset=utf8');
+		//
 		if(is_file(CONFIG_PATH.'config.php'))
 			C(require CONFIG_PATH.'config.php');
 		//从地址栏获取类名、方法名
