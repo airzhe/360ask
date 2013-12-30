@@ -38,7 +38,7 @@ Class Category{
 	Static Public function getParents($cate,$id){
 		$arr=array();
 		foreach ($cate as $v) {
-			if($v['id']==$id){
+			if($v['cid']==$id){
 				$arr[]=$v;
 				$arr=array_merge(self::getParents($cate,$v['pid']),$arr);
 			}
@@ -50,10 +50,10 @@ Class Category{
 	{
 		$arr=array();
 		foreach ($cate as $v) {
-			if($v[pid]==$pid)
+			if($v['pid']==$pid)
 			{
-				$arr[]=$v['id'];
-				$arr=array_merge($arr,self::getChildsId($cate,$v['id']));
+				$arr[]=$v['cid'];
+				$arr=array_merge($arr,self::getChildsId($cate,$v['cid']));
 			}
 		}
 		return $arr;

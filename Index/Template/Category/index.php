@@ -13,33 +13,18 @@
 		<a href="#" class="help">• 帮助</a>
 		<ul class="category hide">
 			<?php foreach ($_data['category'] as $value):?>
-				<li><a href="c=category&amp;cid=<?php echo $value['cid']?>"><?php echo $value['cname']?></a></li>
+				<li><a href="?c=category&amp;cid=<?php echo $value['cid']?>"><?php echo $value['cname']?></a></li>
 			<?php endforeach?>
 		</ul>
 	</div>
 	<div id="breadcrumb">
 		<ul class="crumb clearfix">
 			<li><a href="">全部问题</a><i>&gt;</i></li>
+			<?php foreach ($_data['path'] as $key => $v): ?>
 			<li>
-				<a href="">生活</a><s></s><i>&gt;</i>
-				<ul class="hide">
-					<li><a href="">电脑/网络</a></li>
-					<li><a href="">笔记本电脑</a></li>
-					<li><a href="">互联网</a></li>
-					<li><a href="">操作系统</a></li>
-					<li><a href="">手机/数码</a></li>
-				</ul>
+				<a href=""><?php echo $v['cname']?></a><s></s><i>&gt;</i>
 			</li>
-			<li>
-				<a href="">生活知识</a><s></s>
-				<ul class="hide">
-					<li><a href="">电脑/网络</a></li>
-					<li><a href="">笔记本电脑</a></li>
-					<li><a href="">互联网</a></li>
-					<li><a href="">操作系统</a></li>
-					<li><a href="">手机/数码</a></li>
-				</ul>
-			</li>
+			<?php endforeach ?>
 		</ul>
 	</div>
 	<div class="wrapper cate_list clearfix">
@@ -49,7 +34,7 @@
 				<p>按分类查找</p>
 				<ul class="clearfix">
 					<?php foreach ($_data['child_cate'] as $k => $v): ?>
-						<li><a href=""><?php echo $v['cname']?></a></li>
+						<li><a href="?c=category&amp;cid=<?php echo $v['cid']?>"><?php echo $v['cname']?></a></li>
 					<?php endforeach ?>
 				</ul>
 				<p>按关键词查找</p>
@@ -70,31 +55,14 @@
 							<th>回答数</th>
 							<th>时间</th>
 						</tr>
-						<tr>
-							<td><a href="">u盘写保护怎么去掉 </a><a href="" class="cate">[硬件]</a></td>
-							<td>9</td>
-							<td>5分钟前</td>
+						<?php foreach ($_data['ask'] as $key => $v): ?>
+							<tr>
+							<td><a href="?c=ask&amp;m=show&amp;aid=<?php echo $v['aid']?>"><?php echo $v['title']?></a><a href="" class="cate">[<?php echo $_data['current_cate']['cname']?>]</a></td>
+							<td><?php echo $v['re_count'] ?></td>
+							<td><?php echo date('Y-m-d H:i',$v['time']) ?></td>
 						</tr>
-						<tr>
-							<td><a href="">密码过期怎么办？</a><a href="" class="cate">[密码]</a></td>
-							<td>8</td>
-							<td>9分钟前</td>
-						</tr>
-						<tr>
-							<td><a href="">哪里有安卓版的豪杰解霸软件</a><a href="" class="cate">[软件]</a></td>
-							<td>5</td>
-							<td>17分钟前</td>
-						</tr>
-						<tr>
-							<td><a href="">真不知道百度是怎么想你敢和360作对</a><a href="" class="cate">[360产品]</a></td>
-							<td>2</td>
-							<td>24分钟前</td>
-						</tr>
-						<tr>
-							<td><a href="">移动硬盘使用时电脑显示电量不足是...</a><a href="" class="cate">[硬盘]</a></td>
-							<td>02</td>
-							<td>40分钟前</td>
-						</tr>
+						<?php endforeach ?>
+						
 					</table>
 					<!-- <p class="pages"><b>1</b><a href="?pn=1">2</a><a href="?pn=1" class="next">下一页&gt;</a></p> -->
 				</div>

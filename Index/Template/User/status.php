@@ -8,9 +8,17 @@ if(!isset($_SESSION['uid']) or !isset($_SESSION['uname']) ):
 </div>
 <?php
 else:
-	?>
+	$_member=new Model('member');
+	$me=$_member->where(array('uid'=>$_SESSION['uid']))->find();
+	//头像
+	if($me['avatar']){
+		$me['avatar']=C('UPLOAD_DIR').'avatar/small/'.$me['avatar'];
+	}else{
+		$me['avatar']=C('TPL_PUBLIC').'images/avatar.png';
+	}
+?>
 <div class="info">
-	<a href=""><img src="<?php echo C('TPL_PUBLIC')?>images/avatar.jpg" alt="" width='35' height='35'></a>
+	<a href="?c=member&amp;uid=<?php echo $_SESSION['uid']?>"><img src="<?php echo $me['avatar']?>" alt="" width='35' height='35'></a>
 	<span class="userName"><?php echo $_SESSION['uname']?></span>
 	<a href="javascript:void(0);" class="logout">退出</a>
 </div>

@@ -74,6 +74,13 @@ class AskController extends CommonController{
 				}
 			}
 	}
+	//面包屑导航
+	import("Lib.Category");
+	$_category=new Model('category');
+	$cate=$_category->select();
+	$path=Category::getParents($cate,$ask['cid']);
+	$this->assign('path',$path);
+
 	$answer_count=count($answer);
 	$this->assign('s_uid',$s_uid);
 	$this->assign('ask',$ask);

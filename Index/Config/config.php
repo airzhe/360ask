@@ -16,5 +16,7 @@ return array(
 	//加密密钥
 	'TOKEN'=>'houdunwang.com',
 	//SESSION_NAME
-	'SESSION_NAME'=>md5('houdunwang.com')
+	'SESSION_NAME'=>md5('houdunwang.com'),
+	//上传路径
+	'UPLOAD_DIR'=>'Public/upload/'
 	);

@@ -21,8 +21,11 @@ final class Run{
 	 * 定义常量
 	 */
 	static function define_const(){
-		//框架目录
+		//框架物理目录
 		define('RUN_PATH',dirname(__FILE__).'/');
+		//框架HTTP
+		$root_url=str_replace($_SERVER['DOCUMENT_ROOT'],'http://'.$_SERVER['HTTP_HOST'],RUN_PATH);
+		define('RUN_URL',$root_url);
 	}
 	/**
 	 * 引入框架核心文件

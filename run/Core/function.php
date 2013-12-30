@@ -78,6 +78,7 @@ function load_file($files,$path,$type=false){
 	if(!is_dir($path)){error('路径错误');}
 	$arr=glob_file($path);
 	// p($arr);die;
+	// p($files)
 	$_files='';
 	foreach ($files as $v) {
 		foreach ($arr as $f) {
@@ -219,3 +220,16 @@ function multi_array_sort($multi_array, $sort_key, $sort = SORT_ASC)
 /**
  * 计算几分钟前
  */
+// function jtime($time){
+// 	$now=time();
+// 	$j=$now=$time;
+// 	switch ($j) {
+// 		case < 60:
+// 			echo $j;
+// 			break;
+		
+// 		default:
+// 			# code...
+// 			break;
+// 	}
+// }

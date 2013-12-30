@@ -13,41 +13,21 @@
 	<div id="navigate">
 		<ul class="menu clearfix">
 			<li><a href="#" class="current">问答首页</a><i></i></li>
-			<li id="mav_category"><a href="#">问题库<s></s></a><i></i></li>
+			<li id="mav_category"><a href="#">问题库</a><i></i></li>
 			<li><a href="?c=ask&amp;m=question">提问</a><i></i></li>
 			<li><a href="#">管理团</a><i></i></li>
 			<li><a href="#">积分商城</a></li>
 		</ul>
 		<a href="#" class="help">• 帮助</a>
-		<ul class="category hide">
-			<?php foreach ($_data['category'] as $value):?>
-				<li><a href="c/cid=<?php echo $value['cid']?>"><?php echo $value['cname']?></a></li>
-			<?php endforeach?>
-		</ul>
 	</div>
 	<div id="breadcrumb">
 		<ul class="crumb clearfix">
 			<li><a href="">全部问题</a><i>&gt;</i></li>
+			<?php foreach ($_data['path'] as $key => $v): ?>
 			<li>
-				<a href="">生活</a><s></s><i>&gt;</i>
-				<ul class="hide">
-					<li><a href="">电脑/网络</a></li>
-					<li><a href="">笔记本电脑</a></li>
-					<li><a href="">互联网</a></li>
-					<li><a href="">操作系统</a></li>
-					<li><a href="">手机/数码</a></li>
-				</ul>
+				<a href=""><?php echo $v['cname']?></a><s></s><i>&gt;</i>
 			</li>
-			<li>
-				<a href="">生活知识</a><s></s>
-				<ul class="hide">
-					<li><a href="">电脑/网络</a></li>
-					<li><a href="">笔记本电脑</a></li>
-					<li><a href="">互联网</a></li>
-					<li><a href="">操作系统</a></li>
-					<li><a href="">手机/数码</a></li>
-				</ul>
-			</li>
+			<?php endforeach ?>
 		</ul>
 	</div>
 	<div class="wrapper">

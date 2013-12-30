@@ -25,6 +25,7 @@ input[type=checkbox]{position: relative;top:2px;}
 .modal_body{padding:20px;font-size:14px;}
 .modal_footer{padding:15px;border-top: 1px solid #e5e5e5;text-align: right;}
 .modal_bg{position:absolute;background:#000;opacity:0.5;z-index:9999;left:0;top:0;}
+.modal input[type=submit],.modal button{padding:7px 13px;border:1px solid #e4e4e4;outline:none;background: none;cursor:pointer;color:#333;}
 
 /*正文*/
 body{margin-top:80px;}
@@ -361,9 +362,11 @@ form button span
 #userCenter .left a:hover{color:green;}
 #userCenter .left{width:200px;padding:20px 10px;background: #FCFAFA;}
 #userCenter .left div{text-align: center;position: relative;}
+#userCenter .left .changAvatar{display: none;}
+#userCenter .left .avatar:hover .changAvatar{display: block;}
 #userCenter .left div img{width:180px;height:180px;}
-#userCenter .left div .changAvatar{cursor:pointer;position: absolute;top:140px;right: 20px;background:linear-gradient(#F1EEEE,#F0EBEB,#F1EEEE);border-radius: 2px;border:1px solid #E6E4E4;width: 70px;height:20px;line-height: 20px;color:#666;}
-#userCenter .left div .changAvatar:hover{background:linear-gradient(#FFFDFD,#F3F0F0,#FFFDFD);}
+#userCenter .left div .changAvatar{text-decoration:none;cursor:pointer;position: absolute;top:140px;right: 20px;background:linear-gradient(#F1EEEE,#F0EBEB,#F1EEEE);border-radius: 2px;border:1px solid #E6E4E4;width: 70px;height:20px;line-height: 20px;color:#666;}
+#userCenter .left div .changAvatar:hover{color:#f60;background:linear-gradient(#FFFDFD,#F3F0F0,#FFFDFD);}
 #userCenter .left li{height:32px;line-height:32px;}
 #userCenter .left li.current a{color:green;}
 
@@ -403,3 +406,4 @@ form button span
 #userCenter .achievement li:nth-child(2){color:#d53f40;}
 #userCenter .achievement li:last-of-type{border-right:none;color:#cb6fd7;}
 #userCenter .achievement li:last-of-type s{background-position: 0 -50px;}
+/*我的提问*/

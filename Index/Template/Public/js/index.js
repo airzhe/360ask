@@ -122,12 +122,7 @@ $(document).ready(function(){
 			}
 		})
 	})
-	// user用户中心
-	//百分比插件
-	// $('.chart').easyPieChart({
-	// 	barColor: '#d53f40'
- //        //your configuration goes here
- //    });
+	
 	//ajax加载内容
 	$('#userCenter').children('.left').find('li').click(function(){
 		var self=$(this);
@@ -201,7 +196,7 @@ $(document).ready(function(){
 		}
 	})
 	/*鼠标按下动态改变文字数量。并检测文字长度显示相应样式。*/
-	$('#question').on('keyup',function(){
+	$('#question').on('keydown',function(){
 		var count=getMessageLength($(this).val());
 		var obj_count=$('#ask').find('i.count');
 		var ico=$('#ask').find('s');
@@ -299,7 +294,7 @@ $(document).ready(function(){
 	//提问页面提交按钮
 	$('#ask button').on('click',function(){
 		var question=$('#question');
-		var count=$('#ask').find('.count').text();
+		var count=getMessageLength($('#ask').find('#question').val());
 		if(count==0){
 			question.addClass('empty');
 			setTimeout(function(){
